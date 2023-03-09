@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: 40,
     color: '#EFEFEF',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Arial',
     letterSpacing: 1,
     lineHeight: 30,
   },
