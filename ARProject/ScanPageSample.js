@@ -1,7 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
-export default function ScanPageSample() {
+export default function ScanPageSample({ navigation }) {
+  
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <Image
@@ -76,7 +78,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginHorizontal: 40,
     color: '#EFEFEF',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Helvetica Neue',
     letterSpacing: 1,
     lineHeight: 30,
   },
@@ -95,7 +97,8 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    color: '#E4A21D',
+    marginHorizontal: 40,
+    color: '#EFEFEF',
     fontFamily: 'Helvetica Neue',
     letterSpacing: 2,
   },
