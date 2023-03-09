@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import HomePage from './HomePage'
 import ScanPageSample from './ScanPageSample';
+import IDScannerPage from './IDScannerPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -13,6 +14,7 @@ export default function App() {
       <Stack.Navigator initialRouteName="HomePage">
         <Stack.Screen name="HomePage" component={HomePage} />
         <Stack.Screen name="ScanPageSample" component={ScanPageSample} />
+        <Stack.Screen name="IDScannerPage" component={IDScannerPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );
