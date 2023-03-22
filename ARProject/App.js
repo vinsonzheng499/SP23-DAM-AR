@@ -14,6 +14,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="HomePage">
         <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen name="IDScannerPage" component={IDScannerPage}/>
         <Stack.Screen
           name="ScanPageSample"
           component={ScanPageSample}
