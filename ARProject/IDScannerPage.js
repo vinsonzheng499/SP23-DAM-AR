@@ -6,6 +6,7 @@
 //version before we actually implemented it with NFC tags
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import ScanPageSample from './ScanPageSample';
 import * as Font from 'expo-font';
 
 export default function ArtworkSearch({ navigation }) {
@@ -16,7 +17,8 @@ export default function ArtworkSearch({ navigation }) {
     // and then navigate to the artwork information page
     // TODO: Backend
 
-    navigation.navigate('ArtworkInformation', { artworkID: artworkID });
+    //navigation.navigate('ArtworkInformation', { artworkID: artworkID });
+    navigation.navigate('ScanPageSample');
   }
 
   const [fontLoaded, setFontLoaded] = useState(false);
