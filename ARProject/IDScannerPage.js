@@ -15,24 +15,12 @@ export default function ArtworkSearch({ navigation }) {
     // Here you can make a network request to your backend to retrieve the artwork data
     // and then navigate to the artwork information page
     // TODO: Backend
-    
+
     navigation.navigate('ArtworkInformation', { artworkID: artworkID });
   }
 
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  const loadFonts = async () => {
-    await Font.loadAsync({
-      'Montserrat-Regular': require('./assets/fonts/Montserrat-Regular.ttf'),
-      'Montserrat-Bold': require('./assets/fonts/Montserrat-Bold.ttf'),
-    });
-    setFontLoaded(true);
-  }
-
-  if (!fontLoaded) {
-    loadFonts();
-    return null;
-  }
 
   return (
     <View style={styles.container}>
@@ -67,7 +55,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 40,
     color: '#E4A21D',
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Helvetica Neue',
     letterSpacing: 2,
   },
   inputContainer: {
@@ -79,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     marginRight: 10,
     color: '#EFEFEF',
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: 'Helvetica Neue',
     letterSpacing: 1,
   },
   input: {
@@ -88,7 +76,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 10,
     paddingHorizontal: 10,
-    fontFamily: 'Montserrat-Regular',
+    fontFamily: 'Helvetica Neue',
     fontSize: 20,
     letterSpacing: 1,
   },
@@ -102,7 +90,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: 'bold',
     color: '#121212',
-    fontFamily: 'Montserrat-Bold',
+    fontFamily: 'Helvetica Neue',
     letterSpacing: 2,
   },
 });

@@ -6,7 +6,7 @@ export default function HomePage() {
   const navigation = useNavigation();
 
   const handleButtonPress = () => {
-    navigation.navigate('ScanPageSample');
+    navigation.navigate('IDScannerPage');
   };
 
   return (
