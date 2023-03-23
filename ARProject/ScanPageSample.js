@@ -25,23 +25,23 @@ export default function ScanPageSample({ navigation }) {
         </Text>
       </View>
 
-      <View style={styles.section}>
+
         <Text style={styles.sectionTitle}>Related Artworks</Text>
         <View style={styles.related}>
           <Image
-            source={{ uri: 'https://example.com/artwork2.jpg' }}
+            source={{ uri: 'https://th-thumbnailer.cdn-si-edu.com/pudYlLwHsVzaUG6P4R6IibTiA0g=/1000x750/filters:no_upscale()/https://tf-cmsv2-smithsonianmag-media.s3.amazonaws.com/filer/c6/87/c687edd3-7917-4c25-b112-c032f15ded66/4861890322_136909aa62_b.jpg' }}
             style={styles.relatedImage}
           />
           <Text style={styles.relatedText}>Vitruvian Man</Text>
         </View>
-        <View style={styles.related}>
+        
           <Image
-            source={{ uri: 'https://example.com/artwork3.jpg' }}
+            source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/The_Last_Supper_-_Leonardo_Da_Vinci_-_High_Resolution_32x16.jpg/1200px-The_Last_Supper_-_Leonardo_Da_Vinci_-_High_Resolution_32x16.jpg' }}
             style={styles.relatedImage}
           />
           <Text style={styles.relatedText}>The Last Supper</Text>
-        </View>
-      </View>
+        
+      
 
     </ScrollView>
   );
@@ -55,11 +55,14 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   image: {
-    width: '80%',
-    height: 300,
+    width: '100%',
+    height: 500,
     marginBottom: 20,
+    marginTop: 10,
     borderRadius: 10,
+   position: 'relative',
   },
+
   section: {
     alignItems: 'center',
     justifyContent: 'center',
