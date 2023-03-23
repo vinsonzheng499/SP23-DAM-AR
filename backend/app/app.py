@@ -77,7 +77,6 @@ def get_art_audio(art_id):
     
     # TODO: Return the audio file located at the retrieved audio_file_address
     # Retrieve the audio file from the given address and return it in the appropriate format
-    
     return jsonify({'audio_file_address': audio_file_address}), 200
 
 @app.route('/')
@@ -88,5 +87,7 @@ def index() -> str:
 def artinfo(id) -> str:
     return json.dumps(get_artwork(id))
 
+if __name__ == '__main__':
+    app.run(host='0.0.0.0')
 if __name__ == '__main__':
     app.run(host='0.0.0.0')
