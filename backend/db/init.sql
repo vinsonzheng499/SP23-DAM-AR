@@ -15,9 +15,9 @@ CREATE TABLE art_table (
   audio_file_id INT(10),
 
   PRIMARY KEY (art_id),
-  FOREIGN KEY (artist_id),
-  FOREIGN KEY (image_id),
-  FOREIGN KEY (audio_file_id)
+  FOREIGN KEY (artist_id) REFERENCES artist_table(artist_id),
+  FOREIGN KEY (image_id) REFERENCES image_table(image_id),
+  FOREIGN KEY (audio_file_id) REFERENCES audio_table(audio_file_id)
 );
 
 INSERT INTO art_table
@@ -33,10 +33,10 @@ CREATE TABLE artist_table (
   image_id INT(10),
   biography MEDIUMTEXT,
   audio_file_id INT(10),
-
+  
   PRIMARY KEY (artist_id),
-  FOREIGN KEY (image_id),
-  FOREIGN KEY (audio_file_id)
+  FOREIGN KEY (image_id) REFERENCES image_table(image_id),
+  FOREIGN KEY (audio_file_id) REFERENCES audio_table(audio_file_id)
 );
 
 INSERT INTO artist_table
@@ -51,13 +51,13 @@ CREATE TABLE image_table (
 
   PRIMARY KEY (image_id)
 );
-
+INSERT INTO MyTable (image) VALUES(LOAD_FILE('/tmp/image.png'));
 INSERT INTO image_table
   (image_id, image_blob)
 VALUES
-  (1, /*mona lisa img*/), --TODO: find out hwo to insert blob
+  (1, LOAD_FILE('C:\Users\15125\SP23-DAM-AR\backend\Assets\MonaLisa.jpg')); --TODO: find out how to insert blob
                               --: should image blobs be stored in excel sheet?
-  (2, /*da vinci img*/);
+  -- (2, /*da vinci img*/);
 
 
 CREATE TABLE audio_table (
