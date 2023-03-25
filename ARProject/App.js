@@ -6,6 +6,7 @@ import IDScannerPage from './IDScannerPage';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Ionicons } from '@expo/vector-icons';
+import ArtInfoPage from './ArtInfoPage';
 
 export default function App() {
   const Stack = createStackNavigator();
@@ -14,6 +15,7 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="HomePage">
         <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen name="ArtInfoPage" component={ArtInfoPage} />
         <Stack.Screen name="IDScannerPage" component={IDScannerPage}/>
         <Stack.Screen
           name="ScanPageSample"
