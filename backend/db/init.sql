@@ -3,7 +3,7 @@ use art;
 
 
 CREATE TABLE art_table (
-  art_id INT(10), --do i need to actually set the size?
+  art_id INT(10),
   artist_id INT(10),
   art_name VARCHAR(50),
   museum_name VARCHAR(50),
@@ -29,7 +29,7 @@ VALUES
 CREATE TABLE artist_table (
   artist_id INT(10),
   artist_name VARCHAR(50),
-  artist_lifespan VARCHAR(50), --don't think we need it as proper date, since it would only be displayed as text ever
+  artist_lifespan VARCHAR(50),
   image_id INT(10),
   biography MEDIUMTEXT,
   audio_file_id INT(10),
@@ -55,18 +55,17 @@ INSERT INTO MyTable (image) VALUES(LOAD_FILE('/tmp/image.png'));
 INSERT INTO image_table
   (image_id, image_blob)
 VALUES
-  (1, LOAD_FILE('C:\Users\15125\SP23-DAM-AR\backend\Assets\MonaLisa.jpg')); --TODO: find out how to insert blob
-                              --: should image blobs be stored in excel sheet?
+  (1, LOAD_FILE('C:\Users\15125\SP23-DAM-AR\backend\Assets\MonaLisa.jpg'));
   -- (2, /*da vinci img*/);
 
 
-CREATE TABLE audio_table (
-  audio_file_id INT(10),
-  audio_file_address INT(10) --placeholder. TODO: figure out how to store
-);
+-- CREATE TABLE audio_table (
+--   audio_file_id INT(10),
+--   audio_file_address INT(10) --placeholder. TODO: figure out how to store
+-- );
 
-INSERT INTO audio_table
-  (audio_file_id, audio_file_address)
-VALUES
-  (1, /*mona lisa audio*/),
-  (2, /*da vinci audio*/);
+-- INSERT INTO audio_table
+--   (audio_file_id, audio_file_address)
+-- VALUES
+--   (1, /*mona lisa audio*/),
+--   (2, /*da vinci audio*/);

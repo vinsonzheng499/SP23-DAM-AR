@@ -4,18 +4,18 @@ import json
 
 # Set up a connection to the MySQL database
 mydb = mysql.connector.connect(
-  host="db",
-  port="3306",
-  user="root",
-  password="root",
-  database="art"
+  host = "db",
+  port = "3306",
+  user = "root",
+  password = "root",
+  database = "art"
 )
 
 app = Flask(__name__)
 
 # route to get specific artwork info
 def get_artwork(art_id):
-    cursor = mydb.cursor();
+    cursor = mydb.cursor()
     cursor.execute(f'SELECT * FROM art_table WHERE art_id = {art_id}')
     result = cursor.fetchone()
     cursor.close()
