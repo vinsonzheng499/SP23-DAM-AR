@@ -9,7 +9,7 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import ScanPageSample from './ScanPageSample';
 import * as Font from 'expo-font';
 
-import NfcManager, { NfcEvents, NfcTech } from 'react-native-nfc-manager';
+//import NfcManager, { NfcEvents, NfcTech } from 'react-native-nfc-manager';
 
 
 
@@ -18,28 +18,28 @@ export default function IDScannerPage({ navigation }) {
   const [fontLoaded, setFontLoaded] = useState(false);
 
   //nfc manager stuff
-  useEffect(() => {
-    NfcManager.start();
-    return () => {
-      NfcManager.stop();
-    }
-  }, []);
+  // useEffect(() => {
+  //   NfcManager.start();
+  //   return () => {
+  //     NfcManager.stop();
+  //   }
+  // }, []);
 
-  useEffect(() => {
-    NfcManager.setEventListener(NfcEvents.DiscoverTag, handleNfcDiscoverTag);
-    return () => {
-      NfcManager.setEventListener(NfcEvents.DiscoverTag, null);
-    }
-  }, []);
+  // useEffect(() => {
+  //   NfcManager.setEventListener(NfcEvents.DiscoverTag, handleNfcDiscoverTag);
+  //   return () => {
+  //     NfcManager.setEventListener(NfcEvents.DiscoverTag, null);
+  //   }
+  // }, []);
 
-  const handleNfcDiscoverTag = async (tag) => {
-    const ndef = tag.ndefMessage;
-    if (ndef && ndef.length > 0) {
-      const artworkIdFromTag = ndef[0].payload;
-      setArtworkID(artworkIdFromTag);
-      handlePress();
-    }
-  }
+  // const handleNfcDiscoverTag = async (tag) => {
+  //   const ndef = tag.ndefMessage;
+  //   if (ndef && ndef.length > 0) {
+  //     const artworkIdFromTag = ndef[0].payload;
+  //     setArtworkID(artworkIdFromTag);
+  //     handlePress();
+  //   }
+  // }
 
   const handlePress = () => {
     // Here you can make a network request to your backend to retrieve the artwork data
