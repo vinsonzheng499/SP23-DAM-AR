@@ -8,22 +8,47 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
 import ScanPageSample from './ScanPageSample';
 import * as Font from 'expo-font';
-import NfcManager, {NfcEvents} from 'react-native-nfc-manager';
+
+import NfcManager, { NfcEvents, NfcTech } from 'react-native-nfc-manager';
 
 
-export default function ArtworkSearch({ navigation }) {
+
+export default function IDScannerPage({ navigation }) {
   const [artworkID, setArtworkID] = useState('');
+  const [fontLoaded, setFontLoaded] = useState(false);
+
+  //nfc manager stuff
+  useEffect(() => {
+    NfcManager.start();
+    return () => {
+      NfcManager.stop();
+    }
+  }, []);
+
+  useEffect(() => {
+    NfcManager.setEventListener(NfcEvents.DiscoverTag, handleNfcDiscoverTag);
+    return () => {
+      NfcManager.setEventListener(NfcEvents.DiscoverTag, null);
+    }
+  }, []);
+
+  const handleNfcDiscoverTag = async (tag) => {
+    const ndef = tag.ndefMessage;
+    if (ndef && ndef.length > 0) {
+      const artworkIdFromTag = ndef[0].payload;
+      setArtworkID(artworkIdFromTag);
+      handlePress();
+    }
+  }
 
   const handlePress = () => {
     // Here you can make a network request to your backend to retrieve the artwork data
     // and then navigate to the artwork information page
     // TODO: Backend
-
-    //navigation.navigate('ArtworkInformation', { artworkID: artworkID });
     navigation.navigate('ScanPageSample');
   }
 
-  const [fontLoaded, setFontLoaded] = useState(false);
+  
 
 
   return (
