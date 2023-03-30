@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
   },
   logo: {
     width: 50,
-    height: 50,
+    height: 60,
   },
   description: {
     fontSize: 20,
