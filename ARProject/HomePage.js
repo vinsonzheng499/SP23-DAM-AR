@@ -37,6 +37,20 @@ const Home = ({ handleButtonPress }) => {
 };
 
 const styles = StyleSheet.create({
+  triangle: {
+    width: 0,
+    height: 0,
+    backgroundColor: 'transparent',
+    borderStyle: 'solid',
+    borderRightWidth: 200,
+    borderTopWidth: 200,
+    borderRightColor: 'orange',
+    borderTopColor: 'transparent',
+    transform: [{ rotate: '0deg' }],
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+  },
   container: {
     flex: 1,
     backgroundColor: '#000',
