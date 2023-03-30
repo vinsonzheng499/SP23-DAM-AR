@@ -6,6 +6,7 @@ export default function HomePage() {
   const navigation = useNavigation();
 
   const handleButtonPress = () => {
+    //ArtInfoPage
     navigation.navigate('IDScannerPage');
   };
 
