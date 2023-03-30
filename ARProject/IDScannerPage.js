@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import { NfcManager, NfcTech } from 'react-native-nfc-manager';
-=======
 //this is a barebones scanner page
 //in which the user inputs an integer
 //for the id of the art work they want to retrieve
@@ -12,14 +7,11 @@ import { NfcManager, NfcTech } from 'react-native-nfc-manager';
 import React, { useState } from 'react';
 import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import ScanPageSample from './ScanPageSample';
->>>>>>> dc709c1b0d55e8b6849ec5193fb8eef046859fc6
 import * as Font from 'expo-font';
 
 export default function IDScannerPage({ navigation }) {
   const [artworkID, setArtworkID] = useState('');
-<<<<<<< HEAD
-=======
-  const [fontLoaded, setFontLoaded] = useState(false);
+  // const [fontLoaded, setFontLoaded] = useState(false);
   
   const backgroundImage = require('./background-image.png');
   //nfc manager stuff
@@ -45,7 +37,6 @@ export default function IDScannerPage({ navigation }) {
   //     handlePress();
   //   }
   // }
->>>>>>> dc709c1b0d55e8b6849ec5193fb8eef046859fc6
 
   const handlePress = () => {
     // Here you can make a network request to your backend to retrieve the artwork data
@@ -58,57 +49,50 @@ export default function IDScannerPage({ navigation }) {
   const [fontLoaded, setFontLoaded] = useState(false);
 
   // Initialize the NFC manager
-  useEffect(() => {
-    NfcManager.start();
-    return () => {
-      NfcManager.cancelTechnologyRequest().catch(() => 0);
-      NfcManager.unregisterTagEvent().catch(() => 0);
-      NfcManager.stop();
-    };
-  }, []);
+  // useEffect(() => {
+  //   NfcManager.start();
+  //   return () => {
+  //     NfcManager.cancelTechnologyRequest().catch(() => 0);
+  //     NfcManager.unregisterTagEvent().catch(() => 0);
+  //     NfcManager.stop();
+  //   };
+  // }, []);
 
   // Handle scanned NFC tag
-  const handleNfcDiscover = async (tag) => {
-    const tech = NfcTech.Ndef;
-    const result = await NfcManager.requestTechnology(tech, {
-      alertMessage: 'Ready to read an NFC tag'
-    });
-    const ndef = await NfcManager.getNdefMessage();
-    if (ndef) {
-      const id = ndef[0].payload;
-      setArtworkID(id);
-      handlePress();
-    }
-    await NfcManager.closeTechnology(tech);
-  };
+  // const handleNfcDiscover = async (tag) => {
+  //   const tech = NfcTech.Ndef;
+  //   const result = await NfcManager.requestTechnology(tech, {
+  //     alertMessage: 'Ready to read an NFC tag'
+  //   });
+  //   const ndef = await NfcManager.getNdefMessage();
+  //   if (ndef) {
+  //     const id = ndef[0].payload;
+  //     setArtworkID(id);
+  //     handlePress();
+  //   }
+  //   await NfcManager.closeTechnology(tech);
+  // };
 
-  // Enable foreground dispatch for NFC tag scanning
-  useEffect(() => {
-    const enableForegroundDispatch = async () => {
-      try {
-        await NfcManager.registerTagEvent(handleNfcDiscover);
-      } catch (ex) {
-        console.warn('Error enabling NFC foreground dispatch', ex);
-      }
-    };
-    enableForegroundDispatch();
-    return () => {
-      NfcManager.unregisterTagEvent().catch(() => 0);
-    };
-  }, []);
+  // // Enable foreground dispatch for NFC tag scanning
+  // useEffect(() => {
+  //   const enableForegroundDispatch = async () => {
+  //     try {
+  //       await NfcManager.registerTagEvent(handleNfcDiscover);
+  //     } catch (ex) {
+  //       console.warn('Error enabling NFC foreground dispatch', ex);
+  //     }
+  //   };
+  //   enableForegroundDispatch();
+  //   return () => {
+  //     NfcManager.unregisterTagEvent().catch(() => 0);
+  //   };
+  // }, []);
 
-  if (!fontLoaded) {
-    return null;
-  }
+  // if (!fontLoaded) {
+  //   return null;
+  // }
 
   return (
-<<<<<<< HEAD
-    <View style={styles.container}>
-      <Text style={styles.title}>Scan or Search for an Artwork</Text>
-
-      <TouchableOpacity style={styles.button} onPress={handlePress}>
-        <Text style={styles.buttonText}>Search by ID</Text>
-=======
     // <View style={styles.container}>
     //   <Text style={styles.title}>Search for an Artwork</Text>
 
@@ -135,7 +119,6 @@ export default function IDScannerPage({ navigation }) {
       <Text style={styles.description}>Hold your iPhone near the item to learn more about it.</Text>
       <TouchableOpacity style={styles.button}>
         <Text style={styles.buttonText}>Cancel</Text>
->>>>>>> dc709c1b0d55e8b6849ec5193fb8eef046859fc6
       </TouchableOpacity>
     </View>
   </ImageBackground>
@@ -163,12 +146,6 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-<<<<<<< HEAD
-    marginBottom: 40,
-    color: '#E4A21D',
-    fontFamily: 'Helvetica Neue',
-    letterSpacing: 2,
-=======
     marginBottom: 20,
   },
   logoContainer: {
@@ -188,7 +165,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     marginBottom: 20,
->>>>>>> dc709c1b0d55e8b6849ec5193fb8eef046859fc6
   },
   button: {
     backgroundColor: 'green',
@@ -200,9 +176,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-<<<<<<< HEAD
-});
-=======
   // container: {
   //   flex: 1,
   //   backgroundColor: '#121212',
@@ -253,4 +226,3 @@ const styles = StyleSheet.create({
   //   letterSpacing: 2,
   // },
 });
->>>>>>> dc709c1b0d55e8b6849ec5193fb8eef046859fc6
