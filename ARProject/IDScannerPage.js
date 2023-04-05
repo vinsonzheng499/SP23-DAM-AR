@@ -9,13 +9,56 @@ import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-nativ
 import ScanPageSample from './ScanPageSample';
 import * as Font from 'expo-font';
 
-export default function ArtworkSearch({ navigation }) {
+export default function IDScannerPage({ navigation }) {
   const [artworkID, setArtworkID] = useState('');
+  const [buttonPressed, setPressed] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [numPosts, setNumPosts] = useState(0);
+  const [loaded, setLoaded] = useState(false)
+
+  // connects to backend 
+  useEffect(() => {
+		const fetchPosts = async () => {
+			setLoaded(false);
+			var requestOptions = {
+				method: 'GET',
+				redirect: 'follow',
+			};
+
+			fetch(
+				'http://localhost:5000/artwork/' +
+        artworkID,
+				requestOptions
+			)
+				.then((response) => response.json())
+				.then((result) => {
+					console.log(
+						'fetched: ' +
+							'http://localhost:5000/artwork/' + artworkID 
+					);
+					var postArr = [];
+					for (const [key, value] of Object.entries(result)) {
+						if (key !== 'num_entries') {
+							postArr.push(value);
+						} else {
+							setNumPosts(value);
+						}
+					}
+					setPosts(postArr);
+					setLoaded(true);
+				})
+				.catch((error) => console.log('error', error));
+		};
+		fetchPosts();
+	
+	}, [artworkID]);
 
   const handlePress = () => {
     // Here you can make a network request to your backend to retrieve the artwork data
     // and then navigate to the artwork information page
     // TODO: Backend
+
+    setArtworkID(NFC_tag_id);
 
     //navigation.navigate('ArtworkInformation', { artworkID: artworkID });
     navigation.navigate('ScanPageSample');
@@ -37,7 +80,7 @@ export default function ArtworkSearch({ navigation }) {
           keyboardType="number-pad"
         />
       </View>
-
+      <></>
       <TouchableOpacity style={styles.button} onPress={handlePress}>
         <Text style={styles.buttonText}>Submit</Text>
       </TouchableOpacity>

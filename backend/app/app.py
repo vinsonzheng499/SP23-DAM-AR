@@ -4,15 +4,6 @@ from flask import Flask
 import mysql.connector
 import json
 
-# Set up a connection to the MySQL database
-# mydb = mysql.connector.connect(
-#   host = "db",
-#   port = "3306",
-#   user = "root",
-#   password = "root",
-#   database = "art"
-# )
-
 app = Flask(__name__)
 
 # route to get specific artwork info
@@ -27,9 +18,6 @@ def get_artwork(art_id) -> List[str]:
     connection = mysql.connector.connect(**config)
     cursor = connection.cursor()
     cursor.execute(f'SELECT * FROM art_table WHERE art_id = {art_id}')
-
-    # want results to be List of strings
-    # results = [{art_id: art_name} for (art_id, artist_id, art_name) in cursor]
 
     results = []
     for row in cursor:
@@ -67,23 +55,25 @@ def get_artwork(art_id) -> List[str]:
     # }
 
 # route to get specific artist info
-# def get_artist(artist_id):
-#     cursor = mydb.cursor()
-#     cursor.execute(f'SELECT * FROM artist_table WHERE artist_id = {artist_id}')
-#     result = cursor.fetchone()
-#     cursor.close()
+def get_artist(artist_id):
+    config = {
+        'user': 'root',
+        'password': 'root',
+        'host': 'db',
+        'port': '3306',
+        'database': 'art'
+    }
+    connection = mysql.connector.connect(**config)
+    cursor = connection.cursor()
+    cursor.execute(f'SELECT * FROM artist_table WHERE artist_id = {artist_id}')
 
-#     if result is None:
-#         return {'error': f'Artwork with ID {artist_id} not found'}
+    results = []
+    for row in cursor:
+        rowStr = f'art_id: {row[0]}, art_name: {row[2]}, art_date: {row[4]}, art_era: {row[5]}, image_id: {row[7]}, art_desc: {row[8]}, audio_id: {row[9]}'
+        results.append(rowStr)
+    cursor.close()
 
-#     return {
-#         'artist_id': result[0],
-#         'artist_name': result[1],
-#         'art_lifespan': result[2],
-#         'image_id': result[3],
-#         'biography': result[4],
-#         'audio_file_id': result[5],
-#     }
+    return results
 
 # Define a route to return the audio file for a given piece of art
 # @app.route('/art/<int:art_id>/audio', methods=['GET'])

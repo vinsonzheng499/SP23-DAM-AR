@@ -13,37 +13,27 @@ CREATE TABLE art_table (
   image_id INT(10),
   art_description MEDIUMTEXT,
   audio_file_id INT(10)
-
-  -- PRIMARY KEY (art_id)
-  -- FOREIGN KEY (artist_id) REFERENCES artist_table(artist_id),
-  -- FOREIGN KEY (image_id) REFERENCES image_table(image_id),
-  -- FOREIGN KEY (audio_file_id) REFERENCES audio_table(audio_file_id)
 );
 
 INSERT INTO art_table
   (art_id, artist_id, art_name, museum_name, art_date, art_era, art_type, image_id, art_description, audio_file_id)
-  -- (art_id, artist_id, art_name)
 VALUES
   (1, 2, 'Mona lisa', 'Louvre Museum', '1503-03-28', 'Renaissance', 'Painting', 1, 'Nice work.', 1);
 
 
--- CREATE TABLE artist_table (
---   artist_id INT(10),
---   artist_name VARCHAR(50),
---   artist_lifespan VARCHAR(50),
---   image_id INT(10),
---   biography MEDIUMTEXT,
---   audio_file_id INT(10),
-  
---   PRIMARY KEY (artist_id),
---   FOREIGN KEY (image_id) REFERENCES image_table(image_id),
---   FOREIGN KEY (audio_file_id) REFERENCES audio_table(audio_file_id)
--- );
+CREATE TABLE artist_table (
+  artist_id INT(10),
+  artist_name VARCHAR(50),
+  artist_lifespan VARCHAR(50),
+  image_id INT(10),
+  biography MEDIUMTEXT,
+  audio_file_id INT(10)
+);
 
--- INSERT INTO artist_table
---   (artist_id, artist_name, artist_lifespan, image_id, biography, audio_file_id)
--- VALUES
---   (1, 'Da Vinci', '1452-04-15 to 1519-05-02', 2, 'Great guy.', 2);
+INSERT INTO artist_table
+  (artist_id, artist_name, artist_lifespan, image_id, biography, audio_file_id)
+VALUES
+  (1, 'Da Vinci', '1452-04-15 to 1519-05-02', 2, 'Great guy.', 2);
 
 
 -- CREATE TABLE image_table (
