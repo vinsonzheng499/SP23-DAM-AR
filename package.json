@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "expo-nfc": "^0.0.0",
+    "react-native-nfc-manager": "^3.14.2"
+  }
+}
