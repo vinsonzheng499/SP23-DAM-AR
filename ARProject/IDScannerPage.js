@@ -8,13 +8,17 @@ import React, { useState } from 'react';
 import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import ScanPageSample from './ScanPageSample';
 import * as Font from 'expo-font';
+import NfcManager, {NfcTech} from 'react-native-nfc-manager';
 
 export default function IDScannerPage({ navigation }) {
+  const backgroundImage = require('./background-image.png');
+  
   const [artworkID, setArtworkID] = useState('');
   const [buttonPressed, setPressed] = useState(false);
   const [posts, setPosts] = useState([]);
   const [numPosts, setNumPosts] = useState(0);
-  const [loaded, setLoaded] = useState(false)
+  const [loaded, setLoaded] = useState(false);
+  const [fontLoaded, setFontLoaded] = useState(false);
 
   // connects to backend 
   useEffect(() => {
@@ -52,107 +56,26 @@ export default function IDScannerPage({ navigation }) {
 		fetchPosts();
 	
 	}, [artworkID]);
-  // const [fontLoaded, setFontLoaded] = useState(false);
-  
-  const backgroundImage = require('./background-image.png');
+
   //nfc manager stuff
-  // useEffect(() => {
-  //   NfcManager.start();
-  //   return () => {
-  //     NfcManager.stop();
-  //   }
-  // }, []);
+  async function readNdef() {
+    try {
+      // register for the NFC tag with NDEF in it
+      await NfcManager.requestTechnology(NfcTech.Ndef);
+      // the resolved tag object will contain `ndefMessage` property
+      const tag = await NfcManager.getTag();
+      console.warn('Tag found', tag);
 
-  // useEffect(() => {
-  //   NfcManager.setEventListener(NfcEvents.DiscoverTag, handleNfcDiscoverTag);
-  //   return () => {
-  //     NfcManager.setEventListener(NfcEvents.DiscoverTag, null);
-  //   }
-  // }, []);
-
-  // const handleNfcDiscoverTag = async (tag) => {
-  //   const ndef = tag.ndefMessage;
-  //   if (ndef && ndef.length > 0) {
-  //     const artworkIdFromTag = ndef[0].payload;
-  //     setArtworkID(artworkIdFromTag);
-  //     handlePress();
-  //   }
-  // }
-
-  const handlePress = () => {
-    // Here you can make a network request to your backend to retrieve the artwork data
-    // and then navigate to the artwork information page
-    // TODO: Backend
-    setArtworkID(NFC_tag_id);
-
-    //navigation.navigate('ArtworkInformation', { artworkID: artworkID });
-    navigation.navigate('ScanPageSample');
-    navigation.navigate('ArtworkInformation', { artworkID: artworkID });
+      setArtworkID(tag.)
+    } catch (ex) {
+      console.warn('Oops!', ex);
+    } finally {
+      // stop the nfc scanning
+      NfcManager.cancelTechnologyRequest();
+    }
   }
 
-  const [fontLoaded, setFontLoaded] = useState(false);
-
-  // Initialize the NFC manager
-  // useEffect(() => {
-  //   NfcManager.start();
-  //   return () => {
-  //     NfcManager.cancelTechnologyRequest().catch(() => 0);
-  //     NfcManager.unregisterTagEvent().catch(() => 0);
-  //     NfcManager.stop();
-  //   };
-  // }, []);
-
-  // Handle scanned NFC tag
-  // const handleNfcDiscover = async (tag) => {
-  //   const tech = NfcTech.Ndef;
-  //   const result = await NfcManager.requestTechnology(tech, {
-  //     alertMessage: 'Ready to read an NFC tag'
-  //   });
-  //   const ndef = await NfcManager.getNdefMessage();
-  //   if (ndef) {
-  //     const id = ndef[0].payload;
-  //     setArtworkID(id);
-  //     handlePress();
-  //   }
-  //   await NfcManager.closeTechnology(tech);
-  // };
-
-  // // Enable foreground dispatch for NFC tag scanning
-  // useEffect(() => {
-  //   const enableForegroundDispatch = async () => {
-  //     try {
-  //       await NfcManager.registerTagEvent(handleNfcDiscover);
-  //     } catch (ex) {
-  //       console.warn('Error enabling NFC foreground dispatch', ex);
-  //     }
-  //   };
-  //   enableForegroundDispatch();
-  //   return () => {
-  //     NfcManager.unregisterTagEvent().catch(() => 0);
-  //   };
-  // }, []);
-
-  // if (!fontLoaded) {
-  //   return null;
-  // }
-
   return (
-    // <View style={styles.container}>
-    //   <Text style={styles.title}>Search for an Artwork</Text>
-    //   <View style={styles.inputContainer}>
-    //     <Text style={styles.label}>Artwork ID:</Text>
-    //     <TextInput
-    //       style={styles.input}
-    //       value={artworkID}
-    //       onChangeText={setArtworkID}
-    //       keyboardType="number-pad"
-    //     />
-    //   </View>
-
-    //   <TouchableOpacity style={styles.button} onPress={handlePress}>
-    //     <Text style={styles.buttonText}>Submit</Text>
-    //   </TouchableOpacity>
-    // </View>
     <ImageBackground source={backgroundImage} style={styles.background}>
     <View style={styles.rectangle}>
       <Text style={styles.title}>Ready to Scan</Text>
@@ -160,7 +83,9 @@ export default function IDScannerPage({ navigation }) {
         <Image source={require('./phone-logo.png')} style={styles.logo} />
       </View>
       <Text style={styles.description}>Hold your iPhone near the item to learn more about it.</Text>
-      <TouchableOpacity style={styles.button}>
+      <TouchableOpacity 
+            style={styles.button}
+            onPress={readNdef}>
         <Text style={styles.buttonText}>Cancel</Text>
       </TouchableOpacity>
     </View>
@@ -218,54 +143,5 @@ const styles = StyleSheet.create({
     color: 'white',
     fontSize: 20,
     fontWeight: 'bold',
-  },
-  // container: {
-  //   flex: 1,
-  //   backgroundColor: '#121212',
-  //   alignItems: 'center',
-  //   justifyContent: 'center',
-  // },
-  // title: {
-  //   fontSize: 36,
-  //   fontWeight: 'bold',
-  //   marginBottom: 40,
-  //   color: '#E4A21D',
-  //   fontFamily: 'Helvetica Neue',
-  //   letterSpacing: 2,
-  // },
-  // inputContainer: {
-  //   flexDirection: 'row',
-  //   alignItems: 'center',
-  //   marginBottom: 20,
-  // },
-  // label: {
-  //   fontSize: 24,
-  //   marginRight: 10,
-  //   color: '#EFEFEF',
-  //   fontFamily: 'Helvetica Neue',
-  //   letterSpacing: 1,
-  // },
-  // input: {
-  //   flex: 1,
-  //   backgroundColor: '#EFEFEF',
-  //   height: 40,
-  //   borderRadius: 10,
-  //   paddingHorizontal: 10,
-  //   fontFamily: 'Helvetica Neue',
-  //   fontSize: 20,
-  //   letterSpacing: 1,
-  // },
-  // button: {
-  //   backgroundColor: '#E4A21D',
-  //   paddingVertical: 10,
-  //   paddingHorizontal: 20,
-  //   borderRadius: 10,
-  // },
-  // buttonText: {
-  //   fontSize: 24,
-  //   fontWeight: 'bold',
-  //   color: '#121212',
-  //   fontFamily: 'Helvetica Neue',
-  //   letterSpacing: 2,
-  // },
+  }
 });
