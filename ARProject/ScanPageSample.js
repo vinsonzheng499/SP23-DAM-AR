@@ -1,6 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import { Button } from 'react-native';
+// import Sound from 'react-native-sound';
 
 export default function ScanPageSample({ navigation }) {
   
@@ -46,6 +48,7 @@ export default function ScanPageSample({ navigation }) {
     </ScrollView>
   );
 }
+
 
 const styles = StyleSheet.create({
   container: {
@@ -106,4 +109,27 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
   },
 });
+
+// const AudioButton = ({ audioPath }) => {
+//   const playAudio = () => {
+//     const sound = new Sound(audioPath, null, (error) => {
+//       if (error) {
+//         console.log('failed to load the sound', error);
+//         return;
+//       }
+//       sound.play((success) => {
+//         if (success) {
+//           console.log('successfully finished playing');
+//         } else {
+//           console.log('playback failed due to audio decoding errors');
+//         }
+//       });
+//     });
+//   };
+
+//   return (
+//     <Button title="Play Audio" onPress={playAudio} />
+//   );
+//     // how to export
+// };
 

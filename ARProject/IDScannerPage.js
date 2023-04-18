@@ -4,11 +4,13 @@
 //from the sql database, and then it should go to the page
 //with the art work's information. this is a lower level
 //version before we actually implemented it with NFC tags
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Image, Text, View, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
 import ScanPageSample from './ScanPageSample';
 import * as Font from 'expo-font';
 import NfcManager, {NfcTech} from 'react-native-nfc-manager';
+
+
 
 export default function IDScannerPage({ navigation }) {
   const backgroundImage = require('./background-image.png');
@@ -20,53 +22,30 @@ export default function IDScannerPage({ navigation }) {
   const [loaded, setLoaded] = useState(false);
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  // connects to backend 
-  useEffect(() => {
-		const fetchPosts = async () => {
-			setLoaded(false);
-			var requestOptions = {
-				method: 'GET',
-				redirect: 'follow',
-			};
+  NfcManager.start();
 
-			fetch(
-				'http://localhost:5000/artwork/' +
-        artworkID,
-				requestOptions
-			)
-				.then((response) => response.json())
-				.then((result) => {
-					console.log(
-						'fetched: ' +
-							'http://localhost:5000/artwork/' + artworkID 
-					);
-					var postArr = [];
-					for (const [key, value] of Object.entries(result)) {
-						if (key !== 'num_entries') {
-							postArr.push(value);
-						} else {
-							setNumPosts(value);
-						}
-					}
-					setPosts(postArr);
-					setLoaded(true);
-				})
-				.catch((error) => console.log('error', error));
-		};
-		fetchPosts();
+  useEffect(() => {
+    console.log('hello1');
+    readNdef();
+  }, []);
+  
+  useEffect(() => {
+    console.log('hello3');
+    navigation.navigate('ScanPageSample');
 	
 	}, [artworkID]);
 
   //nfc manager stuff
   async function readNdef() {
     try {
+      console.log('hello2');
       // register for the NFC tag with NDEF in it
       await NfcManager.requestTechnology(NfcTech.Ndef);
       // the resolved tag object will contain `ndefMessage` property
       const tag = await NfcManager.getTag();
       console.warn('Tag found', tag);
 
-      setArtworkID(tag.)
+      setArtworkID(tag);
     } catch (ex) {
       console.warn('Oops!', ex);
     } finally {
@@ -85,8 +64,7 @@ export default function IDScannerPage({ navigation }) {
       </View>
       <Text style={styles.description}>Hold your iPhone near the item to learn more about it.</Text>
       <TouchableOpacity 
-            style={styles.button}
-            onPress={readNdef}>
+            style={styles.button}>
         <Text style={styles.buttonText}>Cancel</Text>
       </TouchableOpacity>
     </View>
@@ -146,3 +124,38 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   }
 });
+
+    // connects to backend 
+
+		// const fetchPosts = async () => {
+		// 	setLoaded(false);
+		// 	var requestOptions = {
+		// 		method: 'GET',
+		// 		redirect: 'follow',
+		// 	};
+
+		// 	fetch(
+		// 		'http://localhost:5000/artwork/' +
+    //     artworkID,
+		// 		requestOptions
+		// 	)
+		// 		.then((response) => response.json())
+		// 		.then((result) => {
+		// 			console.log(
+		// 				'fetched: ' +
+		// 					'http://localhost:5000/artwork/' + artworkID 
+		// 			);
+		// 			var postArr = [];
+		// 			for (const [key, value] of Object.entries(result)) {
+		// 				if (key !== 'num_entries') {
+		// 					postArr.push(value);
+		// 				} else {
+		// 					setNumPosts(value);
+		// 				}
+		// 			}
+		// 			setPosts(postArr);
+		// 			setLoaded(true);
+		// 		})
+		// 		.catch((error) => console.log('error', error));
+		// };
+		// fetchPosts();
