@@ -16,24 +16,30 @@ export default function IDScannerPage({ navigation }) {
   const backgroundImage = require('./background-image.png');
   
   const [artworkID, setArtworkID] = useState('');
+  const [nfcReader, updateNfc] = useState(false);
   const [buttonPressed, setPressed] = useState(false);
   const [posts, setPosts] = useState([]);
   const [numPosts, setNumPosts] = useState(0);
   const [loaded, setLoaded] = useState(false);
   const [fontLoaded, setFontLoaded] = useState(false);
+  
 
   NfcManager.start();
-
-  useEffect(() => {
-    console.log('hello1');
-    readNdef();
-  }, []);
   
   useEffect(() => {
     console.log('hello3');
-    navigation.navigate('ScanPageSample');
-	
+    if (artworkID !== '') {
+      navigation.navigate('ScanPageSample');
+      setArtworkID('');
+    }
 	}, [artworkID]);
+
+  useEffect(() => {
+    readNdef();
+
+    // TODO: chatgpt says cancel isn't called like this
+    () => NfcManager.cancelTechnologyRequest(); // unmount the scanner on navigate away.
+  }, [nfcReader]);
 
   //nfc manager stuff
   async function readNdef() {
@@ -41,16 +47,18 @@ export default function IDScannerPage({ navigation }) {
       console.log('hello2');
       // register for the NFC tag with NDEF in it
       await NfcManager.requestTechnology(NfcTech.Ndef);
+      console.log('reached here');
       // the resolved tag object will contain `ndefMessage` property
       const tag = await NfcManager.getTag();
-      console.warn('Tag found', tag);
+
+      console.log('got here');
 
       setArtworkID(tag);
     } catch (ex) {
-      console.warn('Oops!', ex);
-    } finally {
+
       // stop the nfc scanning
       NfcManager.cancelTechnologyRequest();
+      updateNfc(!nfcReader);
     }
   }
 
