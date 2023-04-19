@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native';
-// import Sound from 'react-native-sound';
+import Sound from 'react-native-sound';
 
 export default function ScanPageSample({ navigation }) {
   
@@ -27,6 +27,9 @@ export default function ScanPageSample({ navigation }) {
         </Text>
       </View>
 
+      <View style={styles.button}>
+        <AudioButton audioPath="ARProject\assets\sample_audio_5mb.mp3" />
+      </View>
 
         <Text style={styles.sectionTitle}>Related Artworks</Text>
         <View style={styles.related}>
@@ -51,6 +54,12 @@ export default function ScanPageSample({ navigation }) {
 
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#007AFF',
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
   container: {
     flexGrow: 1,
     backgroundColor: '#121212',
