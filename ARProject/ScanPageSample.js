@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'; // ploopy was here
 import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native';
@@ -27,8 +27,9 @@ export default function ScanPageSample({ navigation }) {
         </Text>
       </View>
 
-      <View style={styles.button}>
-        <AudioButton audioPath="ARProject\assets\sample_audio_5mb.mp3" />
+      <View>
+        const audioPath = 'ARProject\assets\sample_audio_5mb.mp3';
+        <AudioButton audioPath={audioPath} />
       </View>
 
         <Text style={styles.sectionTitle}>Related Artworks</Text>
@@ -54,12 +55,6 @@ export default function ScanPageSample({ navigation }) {
 
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: '#007AFF',
-    borderRadius: 10,
-    paddingHorizontal: 16,
-    paddingVertical: 8,
-  },
   container: {
     flexGrow: 1,
     backgroundColor: '#121212',
@@ -118,27 +113,3 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
   },
 });
-
-// const AudioButton = ({ audioPath }) => {
-//   const playAudio = () => {
-//     const sound = new Sound(audioPath, null, (error) => {
-//       if (error) {
-//         console.log('failed to load the sound', error);
-//         return;
-//       }
-//       sound.play((success) => {
-//         if (success) {
-//           console.log('successfully finished playing');
-//         } else {
-//           console.log('playback failed due to audio decoding errors');
-//         }
-//       });
-//     });
-//   };
-
-//   return (
-//     <Button title="Play Audio" onPress={playAudio} />
-//   );
-//     // how to export
-// };
-
