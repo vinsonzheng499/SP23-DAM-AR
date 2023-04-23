@@ -1,10 +1,16 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Image, ImageBackground, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native';
-// import Sound from 'react-native-sound';
+import { AntDesign } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
 
 export default function ScanPageSample({ navigation }) {
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  const handlePlayPause = () => {
+    setIsPlaying(!isPlaying);
+  }
   
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -12,8 +18,14 @@ export default function ScanPageSample({ navigation }) {
         source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/405px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg' }}
         style={styles.image}
       />
+      <View style={styles.rectangle} />
 
-      <View style={styles.section}>
+      <ImageBackground
+        source={{ uri: 'https://cdn.discordapp.com/attachments/1098374063015067679/1099791480677208074/triangle.png' }}
+        style={styles.bgimage}
+        >
+
+<View style={styles.section}>
         <Text style={styles.sectionTitle}>About the Artwork</Text>
         <Text style={styles.sectionText}>
           The Mona Lisa is a half-length portrait painting by Italian artist Leonardo da Vinci. It is considered one of the most famous paintings in the world and is housed at the Louvre Museum in Paris.
@@ -26,7 +38,6 @@ export default function ScanPageSample({ navigation }) {
           Leonardo da Vinci was an Italian polymath whose areas of interest included invention, painting, sculpting, architecture, science, music, mathematics, engineering, literature, anatomy, geology, astronomy, botany, writing, history, and cartography.
         </Text>
       </View>
-
 
         <Text style={styles.sectionTitle}>Related Artworks</Text>
         <View style={styles.related}>
@@ -42,20 +53,43 @@ export default function ScanPageSample({ navigation }) {
             style={styles.relatedImage}
           />
           <Text style={styles.relatedText}>The Last Supper</Text>
-        
+          
       
+       </ImageBackground>
 
+
+
+      <TouchableOpacity style={styles.playButton} onPress={handlePlayPause}>
+        {isPlaying ? (
+          <FontAwesome name="pause" size={36} color="#FFFFFF" />
+        ) : (
+          <AntDesign name="caretright" size={36} color="#FFFFFF" />
+        )}
+      </TouchableOpacity>
+
+      
     </ScrollView>
   );
 }
 
 
 const styles = StyleSheet.create({
+  button: {
+    backgroundColor: '#007AFF',
+    borderRadius: 10,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+  },
   container: {
     flexGrow: 1,
-    backgroundColor: '#121212',
+    backgroundColor: '#FFFFFF',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  bgimage: {
+    width: '100%',
+    height: 500,
+    position: 'relative',
   },
   image: {
     width: '100%',
@@ -108,28 +142,26 @@ const styles = StyleSheet.create({
     fontFamily: 'Helvetica Neue',
     letterSpacing: 2,
   },
+  rectangle: {
+    width: 400,
+    height: 100,
+    borderRadius: 10,
+    backgroundColor: '#4F7B48',
+  },
+  playButton: {
+    position: 'absolute',
+    top: '49%',
+    left: '7%',
+    zIndex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#4F7B48',
+    width: 60,
+    height: 60,
+    borderRadius: 30,
+    borderWidth: 3,
+    
+    borderColor: '#FFFFF',
+  },
+
 });
-
-// const AudioButton = ({ audioPath }) => {
-//   const playAudio = () => {
-//     const sound = new Sound(audioPath, null, (error) => {
-//       if (error) {
-//         console.log('failed to load the sound', error);
-//         return;
-//       }
-//       sound.play((success) => {
-//         if (success) {
-//           console.log('successfully finished playing');
-//         } else {
-//           console.log('playback failed due to audio decoding errors');
-//         }
-//       });
-//     });
-//   };
-
-//   return (
-//     <Button title="Play Audio" onPress={playAudio} />
-//   );
-//     // how to export
-// };
-

@@ -26,42 +26,51 @@ export default function IDScannerPage({ navigation }) {
 
   NfcManager.start();
   
+
   useEffect(() => {
-    console.log('hello3');
-    if (artworkID !== '') {
+      
+    setTimeout( () => {
       navigation.navigate('ScanPageSample');
-      setArtworkID('');
-    }
-	}, [artworkID]);
+    }, 3000);
+        
+    }, []);
 
-  useEffect(() => {
-    readNdef();
+  // useEffect(() => {
+  //   if (artworkID !== '') {
+  //     navigation.navigate('ScanPageSample');
+  //     setArtworkID('');
+  //   }
+	// }, [artworkID]);
 
-    // TODO: chatgpt says cancel isn't called like this
-    () => NfcManager.cancelTechnologyRequest(); // unmount the scanner on navigate away.
-  }, [nfcReader]);
+  // COMMENTED OUT FOR VIDEO DEMO, WHEN  YOU DO NOT HAVE NFC TAGS. !!!!!
+  // useEffect(() => {
+  //   readNdef();
 
-  //nfc manager stuff
-  async function readNdef() {
-    try {
-      console.log('hello2');
-      // register for the NFC tag with NDEF in it
-      await NfcManager.requestTechnology(NfcTech.Ndef);
-      console.log('reached here');
-      // the resolved tag object will contain `ndefMessage` property
-      const tag = await NfcManager.getTag();
+  //   // TODO: chatgpt says cancel isn't called like this
+  //   () => NfcManager.cancelTechnologyRequest(); // unmount the scanner on navigate away.
+  // }, [nfcReader]);
 
-      console.log('got here');
+  // //nfc manager stuff
+  // async function readNdef() {
+  //   try {
+  //     console.log('hello2');
+  //     // register for the NFC tag with NDEF in it
+  //     await NfcManager.requestTechnology(NfcTech.Ndef);
+  //     console.log('reached here');
+  //     // the resolved tag object will contain `ndefMessage` property
+  //     const tag = await NfcManager.getTag();
 
-      setArtworkID(tag);
-    } catch (ex) {
+  //     console.log('got here');
 
-      // stop the nfc scanning
-      NfcManager.cancelTechnologyRequest();
-      updateNfc(!nfcReader);
-    }
-  }
+  //     setArtworkID(tag);
+  //   } catch (ex) {
 
+  //     // stop the nfc scanning
+  //     NfcManager.cancelTechnologyRequest();
+  //     updateNfc(!nfcReader);
+  //   }
+  // }
+  //END OF COMMENT !!!
 
   return (
     <ImageBackground source={backgroundImage} style={styles.background}>
