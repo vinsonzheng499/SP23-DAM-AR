@@ -1,36 +1,82 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image, ImageBackground, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { Button } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
+import AudioButton from './AudioButton';
+import Sound from 'react-native-sound';
 
 export default function ScanPageSample({ navigation }) {
   const [isPlaying, setIsPlaying] = React.useState(false);
+  const sound = new Sound('/ARProject/assets/sample_audio_5mb.mp3', Sound.MAIN_BUNDLE, (error) => {
+    if (error) {
+      console.log('Failed to load the sound', error);
+      return;
+    }
+  });
+  const playSound = () => {
+    setIsPlaying(true);
+    sound.play((success) => {
+      if (success) {
+        setIsPlaying(false);
+      } else {
+        console.log('Failed to play the sound');
+      }
+    });
+  };
 
+  const pauseSound = () => {
+    setIsPlaying(false);
+    sound.pause();
+  };
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   }
+
+  const [progress, setProgress] = useState(0);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Update the progress every second
+      setProgress(progress => progress + 0.1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  const handleSliderChange = value => {
+    setProgress(value);
+  };
   
   return (
+    
     <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/405px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg' }}
-        style={styles.image}
-      />
-      <View style={styles.rectangle} />
-
       <ImageBackground
-        source={{ uri: 'https://cdn.discordapp.com/attachments/1098374063015067679/1099791480677208074/triangle.png' }}
+        source={{ uri: 'https://cdn.discordapp.com/attachments/1098374063015067679/1099859602356572231/appbg.png' }}
         style={styles.bgimage}
         >
 
-<View style={styles.section}>
+    <Image
+        source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg/405px-Mona_Lisa%2C_by_Leonardo_da_Vinci%2C_from_C2RMF_retouched.jpg' }}
+        style={styles.image}
+      />
+      <View style={styles.rectangle}>
+      <Image
+        source={{ uri: 'https://cdn.discordapp.com/attachments/674457403730690068/1099884304856797224/soundbar.png' }}
+         style={styles.audiobar}
+      />
+        </View> 
+
+    <View style={styles.section}>
         <Text style={styles.sectionTitle}>About the Artwork</Text>
         <Text style={styles.sectionText}>
           The Mona Lisa is a half-length portrait painting by Italian artist Leonardo da Vinci. It is considered one of the most famous paintings in the world and is housed at the Louvre Museum in Paris.
         </Text>
       </View>
+
+      {/* <View>
+        <AudioButton audioPath={'ARProject\assets\sample_audio_5mb.mp3'} />
+      </View> */}
 
       <View style={styles.section}>
         <Text style={styles.sectionTitle}>About the Artist</Text>
@@ -48,18 +94,17 @@ export default function ScanPageSample({ navigation }) {
           <Text style={styles.relatedText}>Vitruvian Man</Text>
         </View>
         
+        <View style={styles.related}>
           <Image
             source={{ uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/The_Last_Supper_-_Leonardo_Da_Vinci_-_High_Resolution_32x16.jpg/1200px-The_Last_Supper_-_Leonardo_Da_Vinci_-_High_Resolution_32x16.jpg' }}
             style={styles.relatedImage}
           />
           <Text style={styles.relatedText}>The Last Supper</Text>
+          </View>
           
-      
        </ImageBackground>
 
-
-
-      <TouchableOpacity style={styles.playButton} onPress={handlePlayPause}>
+      <TouchableOpacity style={styles.playButton} onPress={isPlaying ? pauseSound : playSound}>
         {isPlaying ? (
           <FontAwesome name="pause" size={36} color="#FFFFFF" />
         ) : (
@@ -88,16 +133,22 @@ const styles = StyleSheet.create({
   },
   bgimage: {
     width: '100%',
-    height: 500,
+    height: 2000,
     position: 'relative',
   },
   image: {
     width: '100%',
     height: 500,
-    marginBottom: 20,
+    marginBottom: 10,
     marginTop: 10,
     borderRadius: 10,
    position: 'relative',
+  },
+  audiobar: {
+    marginTop: 20,
+    marginLeft: 90,
+    width: '60%',
+    height: 60,
   },
 
   section: {
@@ -108,6 +159,7 @@ const styles = StyleSheet.create({
   sectionTitle: {
     fontSize: 36,
     fontWeight: 'bold',
+    textAlign: 'center',
     marginBottom: 20,
     color: '#E4A21D',
     fontFamily: 'Helvetica Neue',
@@ -117,7 +169,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     marginHorizontal: 40,
-    color: '#EFEFEF',
+    color: '#606060',
     fontFamily: 'Helvetica Neue',
     letterSpacing: 1,
     lineHeight: 30,
@@ -138,20 +190,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     textAlign: 'center',
     marginHorizontal: 40,
-    color: '#EFEFEF',
+    color: '#606060',
     fontFamily: 'Helvetica Neue',
     letterSpacing: 2,
   },
   rectangle: {
-    width: 400,
+    width: 300,
+    alignSelf: 'center',
     height: 100,
     borderRadius: 10,
     backgroundColor: '#4F7B48',
   },
   playButton: {
     position: 'absolute',
-    top: '49%',
-    left: '7%',
+    top: '26.9%',
+    left: '17%',
     zIndex: 1,
     justifyContent: 'center',
     alignItems: 'center',

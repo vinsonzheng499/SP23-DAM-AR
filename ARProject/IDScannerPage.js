@@ -31,7 +31,7 @@ export default function IDScannerPage({ navigation }) {
       
     setTimeout( () => {
       navigation.navigate('ScanPageSample');
-    }, 3000);
+    }, 6000);
         
     }, []);
 

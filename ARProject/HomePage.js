@@ -83,13 +83,13 @@ const Home = ({ handleButtonPress }) => {
 
       <Text style={styles.title}>Good Afternoon, Ryan</Text>
       
-      <TextInput
+      {/* <TextInput
         style={styles.input}
         placeholder="Search..."
         value={searchQuery}
         onChangeText={setSearchQuery}
         //style={styles.searchBar}
-      />
+      /> */}
       
       <Image source={require('./Logo.png')} style={styles.image} />
       <View style={styles.tabContainer}>
@@ -171,7 +171,7 @@ const styles = StyleSheet.create({
   },
   button: {
     flex: 3,
-    backgroundColor: '#D4AF37',
+    backgroundColor: '#F2B56B',
     borderRadius: 10,
     padding: 10,
     marginBottom: 10,
@@ -290,7 +290,7 @@ const styles = StyleSheet.create({
     width: 64,
     height: 64,
     borderRadius: 32,
-    backgroundColor: '#FFA500',
+    backgroundColor: '#D4AF37',
     alignItems: 'center',
     justifyContent: 'center',
   },
